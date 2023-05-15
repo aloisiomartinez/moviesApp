@@ -5,15 +5,60 @@
 
     <data>
 
+        <import type="com.example.movieapp.data.DataState" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.movieapp.MovieViewModel" />
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.example.movieapp.MovieFragment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".MovieFragment"
-        tools:listitem="@layout/fragment_movie" />
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.example.movieapp.MovieFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.appState == DataState.Success ? View.VISIBLE : View.GONE}"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".movieHome.MovieFragment"
+            tools:listitem="@layout/fragment_movie" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.appState == DataState.Loading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="@{viewModel.appState == DataState.Error ? View.VISIBLE : View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:text="@string/error_msg" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+
 
 </layout>

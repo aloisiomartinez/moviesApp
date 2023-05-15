@@ -6,7 +6,7 @@
     <data>
         <variable
             name="movieItem"
-            type="com.example.movieapp.placeholder.PlaceholderContent.PlaceholderItem" />
+            type="com.example.movieapp.data.Movie" />
     </data>
 
     <LinearLayout
@@ -17,7 +17,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
+            android:minHeight="350dp"
             android:layout_margin="20dp"
             tools:visibility="visible">
 
@@ -27,13 +28,28 @@
 
 
                 <TextView
+                    android:id="@+id/item_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:layout_marginTop="24dp"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@{movieItem.idString}"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/content"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
                     android:ellipsize="end"
                     android:maxLines="4"
-                    android:text="@{movieItem.content}"
+                    android:text="@{movieItem.overview}"
                     android:textAppearance="?attr/textAppearanceListItem"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -48,27 +64,29 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@mipmap/movie" />
+                    app:srcUrl='@{movieItem.imageUrl ?? ""}' />
 
                 <Button
                     android:id="@+id/buttonShare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/share"
                     android:backgroundTint="@color/material_on_surface_stroke"
+                    android:text="@string/share"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/buttonDetails"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/content" />
 
                 <Button
                     android:id="@+id/buttonDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/details"
                     android:backgroundTint="@color/teal_200"
+                    android:text="@string/details"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/content" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>

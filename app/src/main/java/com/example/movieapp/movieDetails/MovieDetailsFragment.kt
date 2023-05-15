@@ -1,4 +1,4 @@
-package com.example.movieapp
+package com.example.movieapp.movieDetails
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
+import com.example.movieapp.MovieViewModel
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
-import com.google.android.material.snackbar.Snackbar
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 
-class MovieDetails : Fragment() {
+class MovieDetailsFragment : Fragment() {
 
     private val viewModel by navGraphViewModels<MovieViewModel>(R.id.movie_graph) {defaultViewModelProviderFactory}
 
