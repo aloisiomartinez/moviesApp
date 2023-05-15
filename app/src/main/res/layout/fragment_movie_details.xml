@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="movieDetail"
+            type="com.example.movieapp.MovieViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        tools:context=".MovieDetails">
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@{movieDetail.movieDetailsLiveData.title}"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_movie_image" />
+
+        <ImageView
+            android:id="@+id/iv_movie_image"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/movie"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_posters"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="7"
+            android:text="@string/posters"
+            android:layout_marginBottom="8sp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/carousel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+            android:id="@+id/carousel"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent" >
+
+        </org.imaginativeworld.whynotimagecarousel.ImageCarousel>
+
+        <TextView
+            android:id="@+id/tv_movie_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{`Rating :` + movieDetail.movieDetailsLiveData.stars}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title" />
+
+        <TextView
+            android:id="@+id/tv_movie_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="7"
+            android:text="@{movieDetail.movieDetailsLiveData.content}"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movie_rating" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

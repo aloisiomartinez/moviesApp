@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MovieApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="share">SHARE</string>
+    <string name="details">Details</string>
+    <string name="descri_o_filme_exemplo">While travelling on a train in Europe, Jesse, an American man, meets Celine, a French woman. On his last day in Europe before returning to the US, he decides to spend his remaining hours with her.</string>
+    <string name="posters">Posters</string>
+</resources>
