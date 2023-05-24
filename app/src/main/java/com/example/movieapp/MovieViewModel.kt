@@ -4,20 +4,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.movieapp.data.ApiCredentials
 import com.example.movieapp.data.DataState
+import com.example.movieapp.data.Event
 import com.example.movieapp.data.Movie
-import com.example.movieapp.data.MovieResponse
-import com.example.movieapp.movieDetails.MovieDetails
-import com.example.movieapp.movieHome.MovieApiService
+import com.example.movieapp.api.MovieApiService
+import kotlinx.coroutines.launch
 import retrofit2.*
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MovieViewModel : ViewModel() {
 
-    val movieDetailsLiveData: LiveData<MovieDetails>
+    val movieDetailsLiveData: LiveData<Movie>
         get() = _movieDetailsLiveData
 
-    private val _movieDetailsLiveData = MutableLiveData<MovieDetails>()
+    private val _movieDetailsLiveData = MutableLiveData<Movie>()
 
     val movieListLiveData: LiveData<List<Movie>?>
         get() = _movieListLiveData
@@ -26,7 +28,7 @@ class MovieViewModel : ViewModel() {
     val navigationToDetailLiveData
         get() = _navigationToDetailLiveData
 
-    private val _navigationToDetailLiveData = MutableLiveData<Unit>()
+    private val _navigationToDetailLiveData = MutableLiveData<Event<Unit>>()
 
     val appState: LiveData<DataState>
         get() = _appState
@@ -46,39 +48,26 @@ class MovieViewModel : ViewModel() {
     }
 
     fun onMovieSelected(position: Int) {
-        val movieDetails = MovieDetails(
-            title = "Teste nome Filme",
-            content = "Teste descrição filme",
-            stars = "3"
-        )
-        _movieDetailsLiveData.postValue(movieDetails)
-        _navigationToDetailLiveData.postValue(Unit)
+        val movieDetails = _movieListLiveData.value?.get(position)
+        movieDetails?.let {
+            _movieDetailsLiveData.postValue(it)
+            _navigationToDetailLiveData.postValue(Event(Unit))
+        }
     }
 
     private fun getHqData() {
         val authorizationToken = "Bearer ${ApiCredentials().tokenV4}"
-        movieService.getComicList(authorizationToken)
-            .enqueue(object : Callback<MovieResponse> {
-                override fun onResponse(
-                    call: Call<MovieResponse>,
-                    response: Response<MovieResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Log.i("ResponseAPI", "${response.body()?.results}")
-                        _movieListLiveData.postValue(response.body()?.results)
-                        _appState.postValue(DataState.Success)
-                    } else {
-                        _appState.postValue(DataState.Loading)
-                    }
-                }
+        viewModelScope.launch {
+            val response =  movieService.getComicList(authorizationToken)
 
-                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                    Log.e("Erro OnFailure GetComicsList", "$call $t")
-
-                    _appState.postValue(DataState.Error)
-                }
-
-            })
+            if (response.isSuccessful) {
+                Log.i("ResponseAPI", "${response.body()?.results}")
+                _movieListLiveData.postValue(response.body()?.results)
+                _appState.postValue(DataState.Success)
+            } else {
+                _appState.postValue(DataState.Loading)
+            }
+        }
     }
 
 }

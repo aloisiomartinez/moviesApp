@@ -49,8 +49,10 @@ class MovieFragment : Fragment(), MovieItemListener {
         })
 
         viewModel.navigationToDetailLiveData.observe(viewLifecycleOwner, Observer {
-            val action = MovieFragmentDirections.actionMovieFragmentToMovieDetails()
-            findNavController().navigate(action)
+            it.getContentIfNotHandled()?.let {
+                val action = MovieFragmentDirections.actionMovieFragmentToMovieDetails()
+                findNavController().navigate(action)
+            }
         })
 
 

@@ -32,25 +32,6 @@ class MovieDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.movieDetail = viewModel
 
-        val carousel: ImageCarousel = binding.carousel
-        carousel.registerLifecycle(lifecycle)
-        val listCarousel = mutableListOf<CarouselItem>()
-
-        listCarousel.add(
-            CarouselItem(
-                imageUrl = "https://br.web.img3.acsta.net/medias/nmedia/18/90/93/20/20120876.jpg",
-                caption = "Poderoso chefão"
-            )
-        )
-
-        listCarousel.add(
-            CarouselItem(
-                imageUrl = "https://br.web.img2.acsta.net/medias/nmedia/18/90/16/48/20083748.jpg",
-                caption = "Um sonho de liberdade"
-            )
-        )
-
-        carousel.setData(listCarousel)
 
         return binding.root
     }
