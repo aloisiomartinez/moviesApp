@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface MovieApiService {
     @GET("list/1")
-    suspend fun getComicList(
+    suspend fun getMovieList(
         @Header("Authorization") authorization: String,
     ) : Response<MovieResponse>
 }
