@@ -15,14 +15,18 @@ import com.example.movieapp.data.Movie
 import com.example.movieapp.api.MovieApiService
 import com.example.movieapp.database.MovieDataBase
 import com.example.movieapp.repository.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import retrofit2.*
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
-class MovieViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val movieRepository = MovieRepository(application)
-
+@HiltViewModel
+class MovieViewModel @Inject constructor(
+    var movieRepository: MovieRepository
+) : ViewModel() {
+    
     val movieDetailsLiveData: LiveData<Movie>
         get() = _movieDetailsLiveData
 
@@ -55,7 +59,8 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun getMovieData() {
+    @VisibleForTesting
+     fun getMovieData() {
 
         viewModelScope.launch {
             val movieListResult = movieRepository.getMovieData()

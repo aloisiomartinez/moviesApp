@@ -1,17 +1,18 @@
 package com.example.movieapp.dataSource
 
 import android.content.Context
+import com.example.movieapp.dao.MovieDao
 import com.example.movieapp.data.Movie
 import com.example.movieapp.database.MovieDataBase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MovieDatabaseDataSource(
-    context: Context
-) : MovieDataSource {
+class MovieDatabaseDataSource @Inject constructor(): MovieDataSource {
 
-    private val movieDatabase = MovieDataBase.getDataBase(context)
-    private val movieDao = movieDatabase.movieDao(movieDatabase)
+    @Inject
+    lateinit var movieDao: MovieDao
+
 
     override suspend fun getMovieData(): Result<List<Movie>?> =
         withContext(Dispatchers.IO) {

@@ -7,8 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
-class MovieApiClienteDataSource : MovieDataSource {
+class MovieApiClienteDataSource @Inject constructor() : MovieDataSource {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(ApiCredentials().baseUrl)
@@ -30,7 +31,7 @@ class MovieApiClienteDataSource : MovieDataSource {
             }
         }
 
-    override suspend fun saveData(comicList: List<Movie>) {
+    override suspend fun saveData(movieList: List<Movie>) {
         // No - OP
     }
 

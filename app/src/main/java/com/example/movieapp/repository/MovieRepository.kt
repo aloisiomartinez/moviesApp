@@ -5,11 +5,12 @@ import com.example.movieapp.data.Movie
 import com.example.movieapp.dataSource.MovieApiClienteDataSource
 import com.example.movieapp.dataSource.MovieDatabaseDataSource
 import java.lang.Exception
+import javax.inject.Inject
 
-class MovieRepository(context: Context) {
-
-    private val movieApiClienteDataSource = MovieApiClienteDataSource()
-    private val movieDataBaseDataSource = MovieDatabaseDataSource(context)
+class MovieRepository @Inject constructor(
+    var movieApiClienteDataSource: MovieApiClienteDataSource,
+    var movieDataBaseDataSource: MovieDatabaseDataSource
+) {
 
     suspend fun getMovieData(): Result<List<Movie>?> {
         return try {

@@ -16,21 +16,21 @@ import com.example.movieapp.data.Movie
 abstract class MovieDataBase: RoomDatabase() {
     abstract fun movieDao(movieDatabase: MovieDataBase): MovieDao
 
-    companion object {
-        @Volatile
-        private var instance: MovieDataBase?= null
-
-        fun getDataBase(context: Context): MovieDataBase {
-            // Verifica se o Banco ja foi criado, caso não tenha sido cria um novo banco de dados
-            return instance ?: synchronized(this) {
-                val database = Room.databaseBuilder(
-                    context.applicationContext,
-                    MovieDataBase::class.java,
-                    "movie_database"
-                ).build()
-                this.instance = database
-                return database
-            }
-        }
-    }
+//    companion object {/
+//        @Volatile
+//        private var instance: MovieDataBase?= null
+//
+//        fun getDataBase(context: Context): MovieDataBase {
+//            // Verifica se o Banco ja foi criado, caso não tenha sido cria um novo banco de dados
+//            return instance ?: synchronized(this) {
+//                val database = Room.databaseBuilder(
+//                    context.applicationContext,
+//                    MovieDataBase::class.java,
+//                    "movie_database"
+//                ).build()
+//                this.instance = database
+//                return database
+//            }
+//        }
+//    }
 }
